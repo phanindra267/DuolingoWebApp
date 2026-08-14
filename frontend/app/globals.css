@@ -1,0 +1,431 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Duolingo-inspired design system.
+ * All colors are semantic tokens in oklch. Never hardcode colors in components.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Baloo 2", "Nunito", ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-dark: var(--primary-dark);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-duo-blue: var(--duo-blue);
+  --color-duo-blue-dark: var(--duo-blue-dark);
+  --color-duo-gold: var(--duo-gold);
+  --color-duo-gold-dark: var(--duo-gold-dark);
+  --color-duo-purple: var(--duo-purple);
+  --color-duo-purple-dark: var(--duo-purple-dark);
+  --color-duo-red: var(--duo-red);
+  --color-duo-red-dark: var(--duo-red-dark);
+  --color-duo-orange: var(--duo-orange);
+  --color-duo-teal: var(--duo-teal);
+  --color-locked: var(--locked);
+  --color-locked-dark: var(--locked-dark);
+  --color-success-bg: var(--success-bg);
+  --color-success-fg: var(--success-fg);
+  --color-error-bg: var(--error-bg);
+  --color-error-fg: var(--error-fg);
+}
+
+:root {
+  --radius: 1rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.42 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.42 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.42 0 0);
+
+  --primary: oklch(0.75 0.22 133);
+  --primary-dark: oklch(0.66 0.2 133);
+  --primary-foreground: oklch(1 0 0);
+
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.42 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.66 0 0);
+  --accent: oklch(0.95 0.05 236);
+  --accent-foreground: oklch(0.5 0.13 236);
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.91 0 0);
+  --input: oklch(0.91 0 0);
+  --ring: oklch(0.75 0.22 133);
+
+  --duo-blue: oklch(0.71 0.15 236);
+  --duo-blue-dark: oklch(0.62 0.15 236);
+  --duo-gold: oklch(0.85 0.17 88);
+  --duo-gold-dark: oklch(0.75 0.16 76);
+  --duo-purple: oklch(0.73 0.19 305);
+  --duo-purple-dark: oklch(0.64 0.19 305);
+  --duo-red: oklch(0.65 0.22 25);
+  --duo-red-dark: oklch(0.57 0.21 25);
+  --duo-orange: oklch(0.72 0.18 55);
+  --duo-teal: oklch(0.76 0.13 190);
+  --locked: oklch(0.91 0 0);
+  --locked-dark: oklch(0.82 0 0);
+  --success-bg: oklch(0.95 0.09 140);
+  --success-fg: oklch(0.55 0.16 140);
+  --error-bg: oklch(0.95 0.05 20);
+  --error-fg: oklch(0.55 0.2 25);
+
+  --duo-green: oklch(0.75 0.22 133);
+  --duo-green-dark: oklch(0.66 0.2 133);
+  --duo-yellow: oklch(0.85 0.17 88);
+  --bg-card: oklch(1 0 0);
+  --bg-dark: oklch(0.19 0.02 250);
+}
+
+.dark {
+  --background: oklch(0.19 0.02 250);
+  --foreground: oklch(0.95 0 0);
+  --card: oklch(0.24 0.02 250);
+  --card-foreground: oklch(0.95 0 0);
+  --popover: oklch(0.24 0.02 250);
+  --popover-foreground: oklch(0.95 0 0);
+  --primary: oklch(0.75 0.22 133);
+  --primary-dark: oklch(0.63 0.2 133);
+  --primary-foreground: oklch(0.17 0.02 250);
+  --secondary: oklch(0.28 0.02 250);
+  --secondary-foreground: oklch(0.95 0 0);
+  --muted: oklch(0.28 0.02 250);
+  --muted-foreground: oklch(0.72 0.02 250);
+  --accent: oklch(0.3 0.05 236);
+  --accent-foreground: oklch(0.85 0.1 236);
+  --border: oklch(0.34 0.02 250);
+  --input: oklch(0.34 0.02 250);
+  --locked: oklch(0.32 0.02 250);
+  --locked-dark: oklch(0.26 0.02 250);
+  --success-bg: oklch(0.3 0.09 140);
+  --success-fg: oklch(0.85 0.16 140);
+  --error-bg: oklch(0.3 0.08 25);
+  --error-fg: oklch(0.85 0.14 25);
+  --bg-card: oklch(0.24 0.02 250);
+  --bg-dark: oklch(0.19 0.02 250);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* ---------- Chunky Duolingo-style 3D button ---------- */
+@utility btn-3d {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  padding: 0.85rem 1.25rem;
+  transition:
+    transform 0.06s ease,
+    filter 0.15s ease;
+  user-select: none;
+}
+@utility btn-3d-press {
+  transform: translateY(2px);
+}
+
+/* ---------- Character animations ---------- */
+@keyframes duo-breathe {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.015);
+  }
+}
+@keyframes duo-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.08);
+  }
+}
+@keyframes duo-look {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px);
+  }
+  70% {
+    transform: translateX(3px);
+  }
+}
+@keyframes duo-jump {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  30% {
+    transform: translateY(-22px) rotate(-6deg);
+  }
+  55% {
+    transform: translateY(0) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+}
+@keyframes duo-shake {
+  0%,
+  100% {
+    transform: translateX(0) rotate(0);
+  }
+  20% {
+    transform: translateX(-7px) rotate(-4deg);
+  }
+  45% {
+    transform: translateX(7px) rotate(4deg);
+  }
+  70% {
+    transform: translateX(-4px) rotate(-2deg);
+  }
+}
+@keyframes duo-lean {
+  0%,
+  100% {
+    transform: rotate(0) translateY(0);
+  }
+  50% {
+    transform: rotate(-5deg) translateY(-4px);
+  }
+}
+@keyframes duo-wave {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(-28deg);
+  }
+}
+@keyframes duo-clap {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(9px);
+  }
+}
+@keyframes duo-dance {
+  0%,
+  100% {
+    transform: rotate(-7deg) translateY(0);
+  }
+  50% {
+    transform: rotate(7deg) translateY(-10px);
+  }
+}
+@keyframes duo-pop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes duo-confetti-fall {
+  0% {
+    transform: translateY(-20px) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(340px) rotate(560deg);
+    opacity: 0;
+  }
+}
+@keyframes duo-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+@keyframes duo-chest-shake {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+@keyframes duo-slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@utility anim-breathe {
+  animation: duo-breathe 3.2s ease-in-out infinite;
+}
+@utility anim-jump {
+  animation: duo-jump 0.85s ease-in-out infinite;
+}
+@utility anim-shake {
+  animation: duo-shake 0.55s ease-in-out;
+}
+@utility anim-lean {
+  animation: duo-lean 1s ease-in-out infinite;
+}
+@utility anim-dance {
+  animation: duo-dance 0.7s ease-in-out infinite;
+}
+@utility anim-bob {
+  animation: duo-bob 2s ease-in-out infinite;
+}
+@utility anim-pop {
+  animation: duo-pop 0.32s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+}
+@utility anim-slide-up {
+  animation: duo-slide-up 0.28s ease-out both;
+}
+@utility anim-chest-shake {
+  animation: duo-chest-shake 1.1s ease-in-out infinite;
+}
+@utility anim-blink {
+  animation: duo-blink 4.5s linear infinite;
+  transform-origin: center;
+}
+@utility anim-look {
+  animation: duo-look 3.5s ease-in-out infinite;
+}
+@utility anim-wave {
+  animation: duo-wave 0.5s ease-in-out infinite;
+  transform-origin: 80% 20%;
+}
+@utility anim-clap {
+  animation: duo-clap 0.3s ease-in-out infinite;
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ---------- Legacy utility classes for older components ---------- */
+@utility btn-duo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background-color: var(--duo-green);
+  color: #fff;
+  box-shadow: 0 4px 0 0 var(--duo-green-dark);
+  transition: transform 0.06s ease, filter 0.15s ease;
+  user-select: none;
+}
+.btn-duo:hover {
+  filter: brightness(1.05);
+}
+.btn-duo:active {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+@utility glass {
+  background: color-mix(in oklch, var(--card) 85%, transparent);
+  backdrop-filter: blur(8px);
+  border: 2px solid var(--border);
+  border-radius: 1.25rem;
+}
+
+@keyframes legacy-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-2deg); }
+  75% { transform: rotate(2deg); }
+}
+@utility wiggle {
+  animation: legacy-wiggle 2.2s ease-in-out infinite;
+}
+
+@keyframes legacy-slide-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@utility slide-in {
+  animation: legacy-slide-in 0.3s ease-out both;
+}
+
+@keyframes legacy-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+}
+@utility shake {
+  animation: legacy-shake 0.4s ease-in-out;
+}
