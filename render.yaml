@@ -15,7 +15,6 @@ services:
         sync: false
       - key: DATABASE_URL
         value: sqlite:///./database.db
-    disk:
-      name: sqlite-data
-      mountPath: /opt/render/project/src
-      sizeGB: 1
+    # Note: Render persistent disks require a paid plan (e.g. Starter).
+    # For free tier, SQLite runs in local directory and auto-seeds on restart.
+
