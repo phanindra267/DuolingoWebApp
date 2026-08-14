@@ -5,6 +5,10 @@ from typing import Optional
 class User(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     username: str = Field(index=True, unique=True)
+    email: Optional[str] = Field(default=None, index=True, unique=True)
+    password_hash: Optional[str] = Field(default=None)
+    session_token: Optional[str] = Field(default=None, index=True, unique=True)
+    active_course: str = Field(default="spanish")
 
     xp: int = Field(default=0)
     gems: int = Field(default=500)
@@ -23,6 +27,7 @@ class User(SQLModel, table=True):
     listening: bool = Field(default=True)
 
     last_active: Optional[str] = Field(default=None)
+
 
 
 class Language(SQLModel, table=True):

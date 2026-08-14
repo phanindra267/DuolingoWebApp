@@ -78,7 +78,7 @@ export function DuoProvider({ children }: { children: ReactNode }) {
       }
     })();
 
-    fetch(`${API_URL}/user/state`)
+    fetch(`${API_BASE}/api/user/state`)
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error("bad status"))))
       .then((data) => {
         if (cancelled) return;
@@ -104,7 +104,7 @@ export function DuoProvider({ children }: { children: ReactNode }) {
     } catch {
       /* ignore */
     }
-    fetch(`${API_URL}/user/state`, {
+    fetch(`${API_BASE}/api/user/state`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(state),

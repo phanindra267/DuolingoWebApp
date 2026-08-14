@@ -1,24 +1,30 @@
 "use client";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 
 import {
-  Award,
-  BookOpen,
   Flame,
   Gem,
   Heart,
+  LogOut,
   MoreHorizontal,
-  ScrollText,
-  ShoppingBag,
   Shield,
-  Sparkles,
-  Trophy,
-  User,
   X,
+  Globe,
+  FileBadge
 } from "lucide-react";
+import {
+  LearnIcon,
+  CharactersIcon,
+  LeaderboardsIcon,
+  QuestsIcon,
+  ShopIcon,
+  ProfileIcon,
+  MoreIcon,
+} from "./icons";
 import { useState, type ReactNode } from "react";
+import { useUser, useClerk, UserButton } from "@/components/clerk-mock";
 
 import { Btn } from "@/components/duo/Btn";
 import { MORE_PAGES } from "@/lib/duo/data";
@@ -26,12 +32,12 @@ import { MAX_HEARTS, useDuo } from "@/lib/duo/store";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { to: "/", label: "Learn", icon: BookOpen },
-  { to: "/characters", label: "Characters", icon: Sparkles },
-  { to: "/leaderboard", label: "Leaderboards", icon: Trophy },
-  { to: "/quests", label: "Quests", icon: ScrollText },
-  { to: "/shop", label: "Shop", icon: ShoppingBag },
-  { to: "/profile", label: "Profile", icon: User },
+  { to: "/learn", label: "Learn", icon: LearnIcon },
+  { to: "/characters", label: "Characters", icon: CharactersIcon },
+  { to: "/leaderboard", label: "Leaderboards", icon: LeaderboardsIcon },
+  { to: "/quests", label: "Quests", icon: QuestsIcon },
+  { to: "/shop", label: "Shop", icon: ShopIcon },
+  { to: "/profile", label: "Profile", icon: ProfileIcon },
 ] as const;
 
 function NavItem({
@@ -42,7 +48,7 @@ function NavItem({
 }: {
   to: string;
   label: string;
-  icon: typeof BookOpen;
+  icon: React.ComponentType<{ className?: string }>;
   active: boolean;
 }) {
   return (
@@ -54,46 +60,13 @@ function NavItem({
           : "border-transparent text-muted-foreground hover:bg-muted",
       )}
     >
-      <Icon className="size-6 shrink-0" />
+      <Icon className="size-8 shrink-0" />
       <span className="hidden lg:inline">{label}</span>
     </Link>
   );
 }
 
-function MoreMenu() {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className="relative">
-      <button
-        onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center gap-4 rounded-xl border-2 border-transparent px-3 py-2.5 text-sm font-extrabold uppercase tracking-wide text-muted-foreground transition-colors hover:bg-muted"
-      >
-        <MoreHorizontal className="size-6 shrink-0" />
-        <span className="hidden lg:inline">More</span>
-      </button>
-      {open && (
-        <div className="absolute bottom-full left-0 z-30 mb-2 w-56 rounded-2xl border-2 border-border bg-popover p-2 shadow-xl">
-          <Link href="/settings"
-            onClick={() => setOpen(false)}
-            className="block rounded-lg px-3 py-2 text-sm font-bold uppercase text-muted-foreground hover:bg-muted"
-          >
-            Settings
-          </Link>
-          {Object.entries(MORE_PAGES).map(([slug, page]) => (
-            <Link
-              key={slug}
-              href={`/more/${slug}`}
-              onClick={() => setOpen(false)}
-              className="block rounded-lg px-3 py-2 text-sm font-bold uppercase text-muted-foreground hover:bg-muted"
-            >
-              {page.title}
-            </Link>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
+
 
 export function StatsBar({ className }: { className?: string }) {
   const { state } = useDuo();
@@ -213,15 +186,23 @@ export function HeartsWarning() {
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const { state } = useDuo();
+  const { user } = useUser();
+  const { signOut } = useClerk();
+  const router = useRouter();
+  const [moreOpen, setMoreOpen] = useState(false);
+
+  const handleLogout = () => {
+    void signOut(() => router.push("/"));
+  };
 
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-[1400px] gap-6 px-3 sm:px-6">
       {/* Sidebar */}
       <nav className="sticky top-0 hidden h-screen w-[88px] shrink-0 flex-col gap-2 border-r-2 border-border py-6 pr-3 md:flex lg:w-[256px]">
-        <Link href="/" className="mb-6 flex items-center gap-2 px-2">
+        <Link href="/learn" className="mb-6 flex items-center gap-2 px-2">
           <span className="text-3xl">🦉</span>
           <span className="hidden font-display text-3xl font-extrabold text-primary lg:inline">
-            lingua
+            duolingo
           </span>
         </Link>
         {NAV.map((item) => (
@@ -233,20 +214,62 @@ export function AppShell({ children }: { children: ReactNode }) {
             active={pathname === item.to}
           />
         ))}
-        <MoreMenu />
+        <div className="relative">
+          <button
+            onClick={() => setMoreOpen((o) => !o)}
+            className="flex w-full items-center gap-4 rounded-xl border-2 border-transparent px-3 py-2.5 text-sm font-extrabold uppercase tracking-wide text-muted-foreground transition-colors hover:bg-muted"
+          >
+            <MoreIcon className="size-8 shrink-0" />
+            <span className="hidden lg:inline">More</span>
+          </button>
+          {moreOpen && (
+            <div className="absolute top-full left-0 z-50 mt-2 w-72 rounded-2xl border-2 border-border bg-popover p-2 shadow-xl lg:bottom-0 lg:top-auto lg:mb-2 lg:mt-0">
+              <Link href="/more/schools" onClick={() => setMoreOpen(false)} className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold uppercase text-muted-foreground hover:bg-muted">
+                <Globe className="size-6 text-duo-blue" /> Schools
+              </Link>
+              <div className="my-2 h-0.5 bg-border" />
+              <Link href="/settings" onClick={() => setMoreOpen(false)} className="block rounded-xl px-4 py-3 text-sm font-bold uppercase text-muted-foreground hover:bg-muted">
+                Settings
+              </Link>
+              <Link href="/more/help" onClick={() => setMoreOpen(false)} className="block rounded-xl px-4 py-3 text-sm font-bold uppercase text-muted-foreground hover:bg-muted">
+                Help
+              </Link>
+              <button onClick={() => { setMoreOpen(false); handleLogout(); }} className="block w-full rounded-xl px-4 py-3 text-left text-sm font-bold uppercase text-muted-foreground hover:bg-muted">
+                Log Out
+              </button>
+            </div>
+          )}
+        </div>
         <div className="mt-auto hidden rounded-xl bg-muted p-3 lg:block">
-          <p className="text-xs font-bold uppercase text-muted-foreground">Signed in as</p>
-          <p className="text-base font-extrabold">{state.name}</p>
+          <div className="mb-2 flex items-center gap-2">
+            <UserButton afterSignOutUrl="/" />
+            <div className="min-w-0">
+              <p className="text-xs font-bold uppercase text-muted-foreground">Signed in as</p>
+              <p className="truncate text-sm font-extrabold">
+                {user?.firstName ?? user?.username ?? state.name}
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={handleLogout}
+            className="mt-1 flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-xs font-extrabold uppercase text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
+          >
+            <LogOut className="size-4" />
+            <span>Log out</span>
+          </button>
         </div>
       </nav>
 
       <main className="min-w-0 flex-1 pb-24 md:pb-8">
         {/* Mobile top bar */}
         <div className="sticky top-0 z-20 -mx-3 mb-4 flex items-center justify-between border-b-2 border-border bg-background px-3 py-3 sm:-mx-6 sm:px-6 xl:hidden">
-          <Link href="/" className="flex items-center gap-2 md:hidden">
+          <Link href="/learn" className="flex items-center gap-2 md:hidden">
             <span className="text-2xl">🦉</span>
           </Link>
           <StatsBar className="ml-auto" />
+          <div className="ml-3 md:hidden">
+            <UserButton afterSignOutUrl="/" />
+          </div>
         </div>
         {children}
       </main>
@@ -265,7 +288,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               pathname === to ? "bg-accent text-accent-foreground" : "text-muted-foreground",
             )}
           >
-            <Icon className="size-6" />
+            <Icon className="size-8" />
           </Link>
         ))}
         <Link href="/settings"
@@ -275,7 +298,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             pathname === "/settings" ? "bg-accent text-accent-foreground" : "text-muted-foreground",
           )}
         >
-          <MoreHorizontal className="size-6" />
+          <MoreIcon className="size-8" />
         </Link>
       </nav>
     </div>

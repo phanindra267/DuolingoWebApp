@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 export type MascotState =
@@ -28,12 +29,24 @@ export function Mascot({
   size?: number;
   className?: string;
 }) {
+  const [interacted, setInteracted] = useState(false);
+
   const happy = state === "correct" || state === "celebrate";
   const upset = state === "wrong" || state === "sad";
   const eyeScale = happy ? 1.12 : upset ? 0.78 : 1;
 
   return (
-    <div className={cn("select-none", className)} style={{ width: size }} aria-hidden="true">
+    <div 
+      className={cn("select-none transition-transform duration-500 ease-in-out cursor-pointer", interacted && "rotate-[360deg] scale-110", className)} 
+      style={{ width: size }} 
+      aria-hidden="true"
+      onMouseEnter={() => setInteracted(true)}
+      onMouseLeave={() => setInteracted(false)}
+      onClick={() => {
+        setInteracted(false);
+        setTimeout(() => setInteracted(true), 50);
+      }}
+    >
       <svg viewBox="0 0 200 210" className={cn("h-auto w-full", BODY_ANIM[state])}>
         {/* feet */}
         <g fill="var(--duo-gold)">

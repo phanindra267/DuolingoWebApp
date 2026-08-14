@@ -18,3 +18,19 @@ services:
     # Note: Render persistent disks require a paid plan (e.g. Starter).
     # For free tier, SQLite runs in local directory and auto-seeds on restart.
 
+  - type: web
+    name: duolingo-clone-frontend
+    runtime: node
+    region: oregon
+    plan: free
+    branch: main
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: https://duolingo-clone-backend-kyf3.onrender.com
+      - key: PORT
+        value: 3000
+
+

@@ -463,15 +463,16 @@ npm start
 
 ## 🔗 Final Submission Package
 
-> 📋 Replace these with your deployed URLs after hosting:
+> 📋 Replace the Live Frontend URL with your deployed URL after hosting:
 
-| Item            | Example / Placeholder                                              |
+| Item            | URL                                                                |
 |-----------------|--------------------------------------------------------------------|
-| GitHub Repo     | `https://github.com/YOUR_USERNAME/duolingo-clone`                 |
-| Live Frontend   | `https://duolingo-clone-YOURNAME.vercel.app`                      |
-| Backend API     | `https://duolingo-backend-YOURNAME.up.railway.app`                |
-| Health check    | `https://duolingo-backend-YOURNAME.up.railway.app/health`         |
-| Swagger Docs    | `https://duolingo-backend-YOURNAME.up.railway.app/docs`           |
+| GitHub Repo     | `https://github.com/phanindra267/DuolingoWebApp`                   |
+| Live Frontend   | `https://your-frontend-domain.vercel.app` (Replace after hosting)   |
+| Backend API     | `https://duolingo-clone-backend-kyf3.onrender.com`                 |
+| Health check    | `https://duolingo-clone-backend-kyf3.onrender.com/health`          |
+| Swagger Docs    | `https://duolingo-clone-backend-kyf3.onrender.com/docs`            |
+
 
 ---
 
