@@ -1,6 +1,6 @@
 "use client";
 
-import { SignIn } from "@/components/clerk-mock";
+import { SignIn } from "@clerk/nextjs";
 import Link from "next/link";
 
 export default function LoginPage() {
