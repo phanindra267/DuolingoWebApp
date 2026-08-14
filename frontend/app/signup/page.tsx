@@ -3,7 +3,7 @@
 import { SignUp } from "@clerk/nextjs";
 import Link from "next/link";
 
-export default function SignupPage() {
+export default function SignUpPage() {
   return (
     <div style={{ minHeight: "100vh", background: "#fff", display: "flex", flexDirection: "column", fontFamily: "Nunito, sans-serif" }}>
       <header style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 24px", borderBottom: "2px solid #e5e5e5" }}>
@@ -25,16 +25,17 @@ export default function SignupPage() {
           <p style={{ fontSize: 15, color: "#afafaf", fontWeight: 700 }}>Join 500 million learners worldwide</p>
         </div>
 
-        <SignUp 
-          signInUrl="/login" 
-          forceRedirectUrl="/learn" 
+        <SignUp
+          signInUrl="/login"
+          forceRedirectUrl="/learn"
+          routing="hash"
           appearance={{
             elements: {
               card: "shadow-none border-0 p-0",
               header: "hidden",
               footer: "hidden"
             }
-          }} 
+          }}
         />
       </main>
 

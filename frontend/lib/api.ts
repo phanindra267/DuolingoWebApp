@@ -1,6 +1,6 @@
 export const API_BASE =
   (typeof process !== "undefined" && process.env?.NEXT_PUBLIC_API_URL?.replace(/\/$/, "")) ||
-  "http://localhost:8000";
+  "";
 
 export async function apiGet<T>(path: string): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, { cache: "no-store" });

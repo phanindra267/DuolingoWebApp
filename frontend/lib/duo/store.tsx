@@ -78,19 +78,26 @@ export function DuoProvider({ children }: { children: ReactNode }) {
       }
     })();
 
-    fetch(`${API_BASE}/api/user/state`)
-      .then((res) => (res.ok ? res.json() : Promise.reject(new Error("bad status"))))
-      .then((data) => {
-        if (cancelled) return;
-        if (data) setState({ ...DEFAULT_STATE, ...data });
-        hydrated.current = true;
-      })
-      .catch((err) => {
-        if (cancelled) return;
-        console.error("Failed to load state from backend, using localStorage/defaults", err);
-        if (fromStorage) setState({ ...DEFAULT_STATE, ...fromStorage });
-        hydrated.current = true;
-      });
+    const shouldFetch = API_BASE && API_BASE.trim() !== "";
+    if (shouldFetch) {
+      fetch(`${API_BASE}/api/user/state`)
+        .then((res) => (res.ok ? res.json() : Promise.reject(new Error("bad status"))))
+        .then((data) => {
+          if (cancelled) return;
+          if (data) setState({ ...DEFAULT_STATE, ...data });
+          hydrated.current = true;
+        })
+        .catch((err) => {
+          if (cancelled) return;
+          console.error("Failed to load state from backend, using localStorage/defaults", err);
+          if (fromStorage) setState({ ...DEFAULT_STATE, ...fromStorage });
+          hydrated.current = true;
+        });
+    } else {
+      // No API base configured; use localStorage or defaults
+      if (fromStorage) setState({ ...DEFAULT_STATE, ...fromStorage });
+      hydrated.current = true;
+    }
 
     return () => {
       cancelled = true;
@@ -104,13 +111,15 @@ export function DuoProvider({ children }: { children: ReactNode }) {
     } catch {
       /* ignore */
     }
-    fetch(`${API_BASE}/api/user/state`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(state),
-    }).catch(() => {
-      /* ignore — localStorage is the source of truth fallback */
-    });
+    if (API_BASE && API_BASE.trim() !== "") {
+      fetch(`${API_BASE}/api/user/state`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(state),
+      }).catch(() => {
+        /* ignore — localStorage is the source of truth fallback */
+      });
+    }
   }, [state]);
 
   useEffect(() => {

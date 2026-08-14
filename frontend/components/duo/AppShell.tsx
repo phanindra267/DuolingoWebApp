@@ -24,7 +24,7 @@ import {
   MoreIcon,
 } from "./icons";
 import { useState, type ReactNode } from "react";
-import { useUser, useClerk, UserButton } from "@/components/clerk-mock";
+import { useUser, useClerk, UserButton } from "@clerk/nextjs";
 
 import { Btn } from "@/components/duo/Btn";
 import { MORE_PAGES } from "@/lib/duo/data";

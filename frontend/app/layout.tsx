@@ -1,9 +1,7 @@
-"use client";
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
-import { DuoProvider } from "@/lib/duo/store";
-import { SplashWrapper } from "@/components/duo/SplashWrapper";
+import Providers from "./providers";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -23,13 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${nunito.variable} font-sans antialiased`}>
-        <ClerkProvider>
-          <DuoProvider>
-            <SplashWrapper>
-              {children}
-            </SplashWrapper>
-          </DuoProvider>
-        </ClerkProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

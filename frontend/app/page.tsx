@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/components/clerk-mock";
+import { useAuth } from "@clerk/nextjs";
 
 import Header from "@/components/home/Header";
 import HeroSection from "@/components/home/HeroSection";
