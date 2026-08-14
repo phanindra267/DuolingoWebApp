@@ -104,7 +104,7 @@ export default function LearningPathPage() {
           <div
             key={unit.id}
             data-unit-id={unit.id}
-            ref={(el) => (unitRefs.current[unit.id] = el)}
+            ref={(el) => { unitRefs.current[unit.id] = el; }}
             className="mb-12"
           >
             <h3 className="mb-4 text-center text-2xl font-bold">

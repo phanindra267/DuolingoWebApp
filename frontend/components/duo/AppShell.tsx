@@ -372,4 +372,4 @@ export function StatCard({
   );
 }
 
-export { Award, MAX_HEARTS };
+export { MAX_HEARTS };
