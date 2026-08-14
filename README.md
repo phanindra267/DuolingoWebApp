@@ -331,43 +331,7 @@ cd backend && python seed.py
 
 > SQLite on Railway uses a disk (paid) or ephemeral storage. For a **free** durable SQLite, use Render with a **Persistent Disk**, or host on a VPS.
 
----
 
-### Vercel — Frontend
-
-1. Push this repo to **GitHub (public)**.
-2. Go to https://vercel.com/new and import the repo.
-3. Vercel detects Next.js automatically. Make sure:
-   - **Framework Preset:** `Next.js`
-   - **Root Directory:** `frontend`
-   - **Build command:** `next build`  (or `npm run build`)
-   - **Install command:** `npm install`
-4. In **Environment Variables** add:
-   - `NEXT_PUBLIC_API_URL` = `https://<YOUR_RAILWAY_OR_RENDER_BACKEND>.com`
-   (You can add this after deploying the backend, then re-deploy the frontend.)
-5. Deploy. 🚀
-
-The [`frontend/vercel.json`](frontend/vercel.json) is pre-configured as a fallback.
-
----
-
-### Railway — Backend
-
-1. From the same GitHub repo, create a new **Railway** service.
-2. Set **Root Directory** → `backend`
-3. Railway will pick up [`backend/railway.json`](backend/railway.json) and [`backend/nixpacks.toml`](backend/nixpacks.toml) automatically.
-   - Install: `pip install -r requirements.txt`
-   - Build (seed): `python seed.py`
-   - Start: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-4. Add a service **Variable**:
-   - `FRONTEND_URL` = `https://<your-vercel-frontend>.vercel.app`
-   - (Optional) `DATABASE_URL` = `sqlite:///./database.db` (default)
-5. **Add a custom domain** (Railway → Settings → Networking → Generate Domain) and copy it.
-6. Update the frontend's `NEXT_PUBLIC_API_URL` in Vercel and re-deploy.
-
-> 💡 For **persistent SQLite on Railway**, use a **Volume** (Settings → Volumes → Mount at `/app`) OR run on Render with a disk (below).
-
----
 
 ### Render — Backend (better for free persistent SQLite)
 
