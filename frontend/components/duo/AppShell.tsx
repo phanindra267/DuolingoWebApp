@@ -242,7 +242,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
         <div className="mt-auto hidden rounded-xl bg-muted p-3 lg:block">
           <div className="mb-2 flex items-center gap-2">
-            <UserButton afterSignOutUrl="/" />
+            <UserButton />
             <div className="min-w-0">
               <p className="text-xs font-bold uppercase text-muted-foreground">Signed in as</p>
               <p className="truncate text-sm font-extrabold">
@@ -268,7 +268,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </Link>
           <StatsBar className="ml-auto" />
           <div className="ml-3 md:hidden">
-            <UserButton afterSignOutUrl="/" />
+            <UserButton />
           </div>
         </div>
         {children}
